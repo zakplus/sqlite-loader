@@ -1,0 +1,25 @@
+{
+  "name": "sqlite-loader",
+  "version": "1.0.0",
+  "description": "A SQLite query script loader for webpack 2",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "eslint src/index.js && babel src -d build"
+  },
+  "author": "Valerio Bianchi",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/zakplus/sqlite-loader.git"
+  },
+  "keywords": [],
+  "homepage": "https://bitbucket.org/zakplus/sqlite-loader#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.7.0",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}
