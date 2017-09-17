@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/zakplus/sqlite-loader.git"
   },
-  "keywords": [],
+  "keywords": ["webpack", "sqlite", "sql"],
   "homepage": "https://bitbucket.org/zakplus/sqlite-loader#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
