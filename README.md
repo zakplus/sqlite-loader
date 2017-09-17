@@ -14,7 +14,7 @@ npm install --save-dev sqlite-loader
 
 ### Configuration:
 
-You can declare the loader in the webpack configuration file and just import/require the script file in your code:
+You can declare the loader in the webpack configuration file and just import / require the script file in your code:
 
 ```javascript
 // webpack-config.js
@@ -43,7 +43,7 @@ import queries from 'sqlite-loader!./my-queries.sql'
 var queries = require('sqlite-loader!./my-queries.sql');
 ```
 
-### Data structure
+### Data structure:
 
 The loader return a javascript string array in which each item is a SQLite query read from the script file.
 
