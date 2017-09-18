@@ -4,8 +4,9 @@
   "description": "A SQLite query script loader for webpack",
   "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "eslint src/index.js && babel src -d build"
+    "prebuild": "eslint src/index.js",
+    "build": "babel src -d build",
+    "postbuild": "mocha -b"
   },
   "author": "Valerio Bianchi",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "babel-preset-env": "^1.6.0",
     "eslint": "^4.7.0",
     "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.5.3"
   }
 }
