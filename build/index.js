@@ -170,7 +170,6 @@ function generateSourceCode(queries) {
     var query = queries[i];
 
     var escaped = query.replace(/\\/mg, '\\\\');
-    // escaped = escaped.replace(/(\r?\n)/mg, '\\$1');
     escaped = escaped.replace(/\r/mg, '\\r');
     escaped = escaped.replace(/\n/mg, '\\n');
     escaped = escaped.replace(/"/mg, '\\"');
