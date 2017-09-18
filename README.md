@@ -74,7 +74,6 @@ It will result in the following array:
 [
 "CREATE TABLE test (id INTEGER, data TEXT);",
 "INSERT INTO test (id,data) VALUES (1, 'one line');",
-"INSERT INTO test (id,data) VALUES (2, 'two\
-lines');"
+"INSERT INTO test (id,data) VALUES (2, 'two\nlines');"
 ];
 ```
