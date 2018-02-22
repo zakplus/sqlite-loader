@@ -1,6 +1,6 @@
 {
   "name": "sqlite-loader",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A SQLite query script loader for webpack",
   "main": "build/index.js",
   "scripts": {
@@ -27,7 +27,6 @@
     "sqlite",
     "sql"
   ],
-  "homepage": "https://bitbucket.org/zakplus/sqlite-loader#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
