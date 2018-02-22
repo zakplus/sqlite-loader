@@ -97,63 +97,55 @@ var Parser = function () {
             singleLineComment = false;
             this.appendToQuery(chr); // The line break character is not part of the comment itself
           }
-        }
+        } else if (multiLineComment) {
+          // Check for end of multiline comment (C-style)
+          // https://sqlite.org/lang_comment.html
+          if (chr === '*' && nextChr === '/') {
+            multiLineComment = false;
+            i += 1; // Skip next character
+          }
+        } else {
+          // Not in a comment section
 
-        // Check for end of multiline comment (C-style)
-        // https://sqlite.org/lang_comment.html
-        else if (multiLineComment) {
-            if (chr === '*' && nextChr === '/') {
-              multiLineComment = false;
-              i += 1; // Skip next character
+          // If not currently reading a string
+          if (!this.isInString()) {
+            // Check for start of single line comment (https://sqlite.org/lang_comment.html)
+            if (chr === '-' && nextChr === '-') {
+              if (!this.isInString()) {
+                singleLineComment = true;
+                i += 1; // Skip next character
+              }
+            } else if (chr === '/' && nextChr === '*') {
+              // Check for start of multi line comment (https://sqlite.org/lang_comment.html)
+              if (!this.isInString()) {
+                multiLineComment = true;
+                i += 1; // Skip next character
+              }
+            } else if (chr === '"' || chr === "'") {
+              // Check for string start
+              this.startString(chr);
+            }
+          } else if (chr === this.stringEnclosedBy) {
+            // If currently reading a string then check for string end
+
+            // Check if not escaped
+            if (nextChr !== this.stringEnclosedBy) {
+              this.stopString();
             }
           }
 
-          // Not in a comment section
-          else {
-              // If not currently reading a string
-              if (!this.isInString()) {
-                // Check for start of single line comment (https://sqlite.org/lang_comment.html)
-                if (chr === '-' && nextChr === '-') {
-                  if (!this.isInString()) {
-                    singleLineComment = true;
-                    i += 1; // Skip next character
-                  }
-                }
+          if (!singleLineComment && !multiLineComment) {
+            // Not in a comment section
 
-                // Check for start of multi line comment (https://sqlite.org/lang_comment.html)
-                else if (chr === '/' && nextChr === '*') {
-                    if (!this.isInString()) {
-                      multiLineComment = true;
-                      i += 1; // Skip next character
-                    }
-                  }
+            // Append character to current query
+            this.appendToQuery(chr);
 
-                  // Check for string start
-                  else if (chr === '"' || chr === "'") {
-                      this.startString(chr);
-                    }
-              }
-
-              // If currently reading a string then check for string end
-              else if (chr === this.stringEnclosedBy) {
-                  // Check if not escaped
-                  if (nextChr !== this.stringEnclosedBy) {
-                    this.stopString();
-                  }
-                }
-
-              if (!singleLineComment && !multiLineComment) {
-                // Not in a comment section
-
-                // Append character to current query
-                this.appendToQuery(chr);
-
-                // Semicolon ends current query if not in a string
-                if (chr === ';' && !this.isInString()) {
-                  this.confirmQuery();
-                }
-              }
+            // Semicolon ends current query if not in a string
+            if (chr === ';' && !this.isInString()) {
+              this.confirmQuery();
             }
+          }
+        }
       }
 
       return this.queries;
