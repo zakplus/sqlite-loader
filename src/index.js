@@ -79,19 +79,16 @@ class Parser {
           singleLineComment = false;
           this.appendToQuery(chr); // The line break character is not part of the comment itself
         }
-      }
-
-      // Check for end of multiline comment (C-style)
-      // https://sqlite.org/lang_comment.html
-      else if (multiLineComment) {
+      } else if (multiLineComment) {
+        // Check for end of multiline comment (C-style)
+        // https://sqlite.org/lang_comment.html
         if (chr === '*' && nextChr === '/') {
           multiLineComment = false;
           i += 1; // Skip next character
         }
-      }
+      } else {
+        // Not in a comment section
 
-      // Not in a comment section
-      else {
         // If not currently reading a string
         if (!this.isInString()) {
           // Check for start of single line comment (https://sqlite.org/lang_comment.html)
@@ -100,24 +97,19 @@ class Parser {
               singleLineComment = true;
               i += 1; // Skip next character
             }
-          }
-
-          // Check for start of multi line comment (https://sqlite.org/lang_comment.html)
-          else if (chr === '/' && nextChr === '*') {
+          } else if (chr === '/' && nextChr === '*') {
+            // Check for start of multi line comment (https://sqlite.org/lang_comment.html)
             if (!this.isInString()) {
               multiLineComment = true;
               i += 1; // Skip next character
             }
-          }
-
-          // Check for string start
-          else if (chr === '"' || chr === "'") {
+          } else if (chr === '"' || chr === "'") {
+            // Check for string start
             this.startString(chr);
           }
-        }
+        } else if (chr === this.stringEnclosedBy) {
+          // If currently reading a string then check for string end
 
-        // If currently reading a string then check for string end
-        else if (chr === this.stringEnclosedBy) {
           // Check if not escaped
           if (nextChr !== this.stringEnclosedBy) {
             this.stopString();
@@ -142,7 +134,6 @@ class Parser {
   }
 }
 
-
 function generateSourceCode(queries) {
   let src = 'module.exports = [\n';
 
@@ -161,7 +152,6 @@ function generateSourceCode(queries) {
   src += '\n];';
   return src;
 }
-
 
 module.exports = function sqliteLoader(source) {
   this.cacheable = true;
