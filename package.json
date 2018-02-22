@@ -1,6 +1,6 @@
 {
   "name": "sqlite-loader",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A SQLite query script loader for webpack",
   "main": "build/index.js",
   "scripts": {
@@ -8,14 +8,22 @@
     "build": "babel src -d build",
     "postbuild": "mocha -b"
   },
-  "author": "Valerio Bianchi",
-  "license": "ISC",
+  "author": {
+    "name": "Valerio Bianchi",
+    "email": "contacts@valeriobianchi.com",
+    "url": "https://valeriobianchi.com"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/zakplus/sqlite-loader.git"
+    "url": "https://github.com/zakplus/sqlite-loader.git"
   },
   "keywords": [
     "webpack",
+    "loader",
     "sqlite",
     "sql"
   ],
